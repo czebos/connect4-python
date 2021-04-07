@@ -21,18 +21,18 @@ class Connect4:
 
     """
     This function makes the move if its valid.
-    It returns the winner if there is one.
+    It returns the winner if there is one and the row.
     """
     def makeMove(self, col):
         # If outside the boundaries of width
         if col < 0 or col >= self.width:
             print("Not a valid move")
-            return EMPTY
+            return [EMPTY, -1]
         else:
             # If col filled up
             if self.board[0][col] != EMPTY:
                 print("Not a valid move")
-                return EMPTY
+                return [EMPTY, -1]
             # Find the first time a slot is open
             top = 0
             while top < self.height and self.board[top][col] == EMPTY:
@@ -40,7 +40,7 @@ class Connect4:
             top -= 1
             self.board[top][col] = self.turn
             self.switchTurns()
-            return CheckGameOver(self.board)
+            return [CheckGameOver(self.board), top]
 
     """
     This function switches the current players move.

@@ -1,4 +1,4 @@
-from constants import EMPTY, PLAYER_ONE, PLAYER_TWO
+from constants import EMPTY, PLAYER_ONE, PLAYER_TWO, DRAW
 
 """
 This checks if there is a current winner for the game
@@ -10,7 +10,11 @@ def CheckGameOver(board):
             winner = CheckDirections(board,i,j) # check if theres 4 in a row in any direciton
             if winner != EMPTY:
                 return winner
-    return EMPTY
+    for i in range(len(board)): # for each space
+        for j in range(len(board[0])):
+            if board[i][j] == EMPTY:
+                return EMPTY
+    return DRAW
 
 """
 This function returns the winner if there is one.
