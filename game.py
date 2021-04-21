@@ -4,7 +4,7 @@ from game_over import CheckGameOver
 """
 We chose to represent Connect 4 as a class, becase
 there are a lot of variables that should be stored 
-for a given game. It has the methods init, makemove
+for a given game. It has the methods init, make_move
 and and switchTurns.
 """
 class Connect4:
@@ -19,13 +19,11 @@ class Connect4:
         self.width = width
         self.height = height
 
-
     """
     This function makes the move if its valid.
     It returns the winner if there is one and the row.
     """
-    def makeMove(self, col):
-        # If outside the boundaries of width
+    def make_move(self, col):
         if col < 0 or col >= self.width:
             print("Not a valid move")
             return [EMPTY, -1]

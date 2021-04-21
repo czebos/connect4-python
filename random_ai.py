@@ -9,21 +9,18 @@ move and make a random one amonst them
 """
 class RandomAI:
 
-    def __init__(self, game, gui):
-        self.game = game
+    def __init__(self, gui):
         self.gui = gui
+        self.human = False
 
     """
     This is the move function that makes a move.
     The game calls this so that it can make a move.
     """
-    def makeMove(self):
+    def take_turn(self, board):
         validMoves = []
-        for i,e  in enumerate(self.gui.game.board[0]):
-            print((i,e))
-            
-            if e == EMPTY:
+        for i in range(len(board[0])):
+            if board[0][i] == EMPTY:
                 validMoves.append(i)
-
-        time.sleep(.5)
-        self.gui.makeMove(random.choice(validMoves))
+        move = random.choice(validMoves)
+        self.gui.make_move(move)
