@@ -4,7 +4,7 @@
 
 First, You need to clone the repository.
 
-<addr> git clone https://github.com/czebos/connect4-python.git <addr>
+'<addr>' git clone https://github.com/czebos/connect4-python.git 
 
 Next, CD into the repository,
 
