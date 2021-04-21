@@ -1,4 +1,5 @@
 from constants import EMPTY
+import time
 import random
 
 """
@@ -20,10 +21,9 @@ class RandomAI:
         validMoves = []
         for i,e  in enumerate(self.gui.game.board[0]):
             print((i,e))
-
+            
             if e == EMPTY:
                 validMoves.append(i)
 
-
-        print(validMoves)
+        time.sleep(.5)
         self.gui.makeMove(random.choice(validMoves))

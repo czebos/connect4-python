@@ -35,13 +35,13 @@ class Connect4:
                 print("Not a valid move")
                 return [EMPTY, -1]
             # Find the first time a slot is open
-            top1 = 0
+            top = 0
             while top < self.height and self.board[top][col] == EMPTY:
-                top1 += 1
-            top1 -= 1
+                top += 1
+            top -= 1
             self.board[top][col] = self.turn
             self.switchTurns()
-            return [CheckGameOver(self.board), top1]
+            return [CheckGameOver(self.board), top]
 
     """
     This function switches the current players move.
