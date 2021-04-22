@@ -4,6 +4,7 @@ from constants import EMPTY, PLAYER_ONE, PLAYER_TWO, DRAW
 from random_ai import RandomAI
 from minimax_ai import MinimaxAI
 from human import Human
+import time
 
 """
 This class represents the GUI of the game. This
@@ -68,28 +69,32 @@ class GUI:
     Both use it to return the move.
     """
     def make_move(self, move):
-        game_over, r = self.game.make_move(move)
+        r = self.game.make_move(move)
 
         if r != -1:
             self.draw_piece(r,move)
 
-        if game_over:
+        if self.game.game_over:
             text = '' # Get the right text to draw
             self.game_over = True
-            if game_over == DRAW:
+            if self.game.game_over == DRAW:
                 text = 'DRAW'
-            if game_over == PLAYER_ONE:
+            if self.game.game_over == PLAYER_ONE:
                 text = "PLAYER ONE WINS"
-            if game_over == PLAYER_TWO:
+            if self.game.game_over == PLAYER_TWO:
                 text = "PLAYER TWO WINS"
             self.canvas.create_text(250, 250, text=text, font=("Times New Roman", 32))
         else:
             if self.curr_player == self.player_1:
                 self.curr_player = self.player_2
-                self.player_2.take_turn(self.game.board)
+                if not self.player_2.human:
+                    self.master.update()
+                    self.player_2.take_turn(self.game.board)
             elif self.curr_player == self.player_2:
                 self.curr_player = self.player_1
-                self.player_1.take_turn(self.game.board)
+                if not self.player_1.human:
+                    self.master.update()
+                    self.player_1.take_turn(self.game.board)
 
     """
     This function draws all the necesarry buttons needed for

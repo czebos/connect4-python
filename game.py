@@ -18,6 +18,7 @@ class Connect4:
         self.turn = PLAYER_ONE
         self.width = width
         self.height = height
+        self.game_over = False
 
     """
     This function makes the move if its valid.
@@ -39,7 +40,8 @@ class Connect4:
             top -= 1
             self.board[top][col] = self.turn
             self.switchTurns()
-            return [CheckGameOver(self.board), top]
+            self.game_over = CheckGameOver(self.board)
+            return top
 
     """
     This function switches the current players move.

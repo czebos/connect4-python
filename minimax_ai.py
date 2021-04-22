@@ -20,7 +20,8 @@ class MinimaxAI:
     The game calls this so that it can make a move.
     """
     def take_turn(self, board):
-        best_move = self.minimax(board,3)
+        time.sleep(.2)
+        best_move = self.minimax(board,2)
         self.gui.make_move(best_move)
 
     def minimax(self, board, cutoff):
@@ -52,7 +53,7 @@ class MinimaxAI:
     def minimizer(self, board, cutoff, curr_player):
         board_state = self.evaluate_board(board)
         if cutoff == 0 or self.is_terminal(board_state):
-            return board_state[self.player-1]
+            return board_state[self.opposing_player(self.player)-1]
         next_player = PLAYER_ONE if self.player == PLAYER_TWO else PLAYER_TWO
         v = float('inf')
         valid_moves = self.get_valid_moves(board)
@@ -141,13 +142,13 @@ class MinimaxAI:
             s = arr[i:i+4]
             if len(s) == 4:
                 if s.count(player) == 4:
-                    return 100
+                    return float('inf')
                 if s.count(player) == 3 and s.count(EMPTY) == 1:
                     return 5
                 if s.count(player) == 2 and s.count(EMPTY) == 2:
                     return 2
                 if s.count(self.opposing_player(player)) == 3 and s.count(EMPTY) == 1:
-                    return -5
+                    return -100
 
         return 0
 

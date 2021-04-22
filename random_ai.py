@@ -18,6 +18,7 @@ class RandomAI:
     The game calls this so that it can make a move.
     """
     def take_turn(self, board):
+        time.sleep(.2)
         validMoves = []
         for i in range(len(board[0])):
             if board[0][i] == EMPTY:
