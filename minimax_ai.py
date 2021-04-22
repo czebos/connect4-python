@@ -20,10 +20,18 @@ class MinimaxAI:
     The game calls this so that it can make a move.
     """
     def take_turn(self, board):
+        # pause for more fluid game visuals
         time.sleep(.2)
+        # calcualte the best move using minimax
         best_move = self.minimax(board,2)
         self.gui.make_move(best_move)
 
+    '''
+    This is the minimax algorithm. The algorithm has two components, minimizing and 
+    maximizing. The maximizing portion of the algorithm serves to maximize ones own score,
+    while the minimizing portion serves to minimize the score the opposing player can
+    can achieve.
+    '''
     def minimax(self, board, cutoff):
         valid_moves = self.get_valid_moves(board)
         best_move = valid_moves[0]
@@ -37,6 +45,9 @@ class MinimaxAI:
                 best_move = move
         return best_move
 
+    '''
+    This is the maximizer, used to maximize the score that the player can achieve
+    '''
     def maximizer(self, board, cutoff, curr_player):
         board_state = self.evaluate_board(board)
         if cutoff == 0 or self.is_terminal(board_state):
@@ -50,6 +61,10 @@ class MinimaxAI:
             v = max(v, next_state_val)
         return v
 
+    '''
+    This is the minimizer, this serves to minimize the possible score the opponent can
+    achieve
+    '''
     def minimizer(self, board, cutoff, curr_player):
         board_state = self.evaluate_board(board)
         if cutoff == 0 or self.is_terminal(board_state):
@@ -137,6 +152,11 @@ class MinimaxAI:
             curr_row = curr_row - 1 if upward else curr_row + 1
         return diag
 
+    
+    '''
+    This function scores a particular row/col/diagnol. Points are awarded based on how many in the row the player
+    can get, and points are subtracted for the opponent having more in a row
+    '''
     def score_slice(self, arr, player):
         for i in range(len(arr)):
             s = arr[i:i+4]
@@ -152,6 +172,10 @@ class MinimaxAI:
 
         return 0
 
+    '''
+    checks to see if anyone won. returns a score for each player depending on who won or lost
+    '''
+
     def check_winner(self, arr):
         for i in range(len(arr)):
             s = arr[i:i+4]
@@ -160,6 +184,10 @@ class MinimaxAI:
             if s.count(PLAYER_TWO) == 4:
                 return True, [float('inf'), float('-inf')]
         return False, [0,0]
+
+    '''
+    gets valid moves on the board
+    '''
     
     def get_valid_moves(self, board):
         moves = []
@@ -168,6 +196,9 @@ class MinimaxAI:
                 moves.append(i)
         return moves
 
+    '''
+    checks if there's a draw on the board
+    '''
     def check_draw(self, board):
         for row in board:
             for val in row:
@@ -175,12 +206,16 @@ class MinimaxAI:
                     return False
         return True
 
+    '''
+    checks if a board state is terminal (win,loss,draw)
+    '''
     def is_terminal(self, arr):
         return (arr == [float('inf'), float('-inf')] or arr == [float('-inf'),float('inf')] or arr == [0, 0])
 
-    def update_board(self, board):
-        self.curr_board = board
-
+    '''
+    simulates a move on the board and returns the board after the theoretical move. used for scoring 
+    purposes
+    '''
     def simulate_move(self, curr_board, col, player):
         c = copy.deepcopy(curr_board)
         for i in range(len(curr_board)-1, -1, -1):

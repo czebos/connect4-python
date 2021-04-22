@@ -69,11 +69,14 @@ class GUI:
     Both use it to return the move.
     """
     def make_move(self, move):
+        # first have the game make the move and return whether the move was valid
         r = self.game.make_move(move)
 
+        # if the move was valid draw the piece
         if r != -1:
             self.draw_piece(r,move)
 
+        # check if the game is over and if so show the correct outcome
         if self.game.game_over:
             text = '' # Get the right text to draw
             self.game_over = True
@@ -85,6 +88,8 @@ class GUI:
                 text = "PLAYER TWO WINS"
             self.canvas.create_text(250, 250, text=text, font=("Times New Roman", 32))
         else:
+            # once the player makes a move the AIs (if applicable) will be prompted to make their 
+            # move
             if self.curr_player == self.player_1:
                 self.curr_player = self.player_2
                 if not self.player_2.human:
